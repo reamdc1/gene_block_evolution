@@ -3,6 +3,13 @@
 # TODO BLAST field 0 and 1 should actually be generated and formatted by seperate classes that the Homolog class inherits.  In this way any update to information we
 # scrape into these fields will automatically be incorporated.  this is not done, and will be put off while i move on, but needs ot be done eventually to make this easier to 
 # maintain in the future.
+
+
+# Copyright(C) 2014 David Ream
+# Released under GPL version 3 licence. http://www.gnu.org/licenses/lgpl.html
+# Do not remove this comment
+
+
 class Homolog:
     """This is a class that will hold the values that i wish to store about homologs"""
     #def __init__(self, Accession, Organism, Locus, Gene, Predicted_gene, Synonyms, Eval, Percent_ident, Bits_score, GC, Start, Stop, Strand, Product_type, HGT_candidate = {'likelyhood':'not_eval', 'method': 

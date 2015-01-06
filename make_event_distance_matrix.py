@@ -131,7 +131,7 @@ def parse_operon_result_files(in_folder, dest_folder, operon_filter_file):
         #for i in [i.strip() for i in open(fname).readlines() if len(i) > 1 and i[0] == '#']:
             #if i[:2] == '##':
             if len(i) < 2:
-                print "fuck", i, fname
+                print "err", i, fname
             if i[0] == '#':
                 comprehensive_list, group_list = group_homologs(tmp_hlog_list_for_grouping, INTERGENIC_MAX_LENGTH)
                 for group in group_list:

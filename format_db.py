@@ -13,7 +13,7 @@ from Bio.SeqRecord import SeqRecord
 #from Bio.Seq import Seq
 #from Bio.Alphabet import generic_dna
 
-# Copyright(C) 2013 David Ream
+# Copyright(C) 2014 David Ream
 # Released under GPL version 3 licence. http://www.gnu.org/licenses/lgpl.html
 # Do not remove this comment
 
@@ -128,27 +128,6 @@ def convert_genbank(genbank_tuple):
                 stop = int(feature.location.end)
             except:
                 error_in_field = True
-            # /rant this piece of code that i am adding here is insane, totally fucking insane. it is 5 AM, i have been debugging this garbage for hours
-            # and for fucks sake, the issues that are being thrown is a goddamn '>' or '<' in the fucking start/stop pair for fuck knows why.
-            # and all that i have to say here is AHHHHHHHHHHHHHHHHHH!!!!!! /end rant
-            
-            '''
-            # check that start is actually an integer value
-            real_start = []
-            for i in start:
-                if i.isdigit():
-                    real_start.append(i)
-            
-            start = ''.join(real_start)
-            
-            
-            # check that start is actually an integer value
-            real_stop = []
-            for i in stop:
-                if i.isdigit():
-                    real_stop.append(i)
-            stop = ''.join(real_stop)
-            '''
             
             strand = feature.strand
             dna_seq = seq_record.seq[start:stop]
