@@ -1,0 +1,4 @@
+rrsA-ileT-alaT-rrlA-rrfA	rrsA:r	ileT:r	rrfA:r	alaT:r	rrlA:r
+rrsD-ileU-alaU-rrlD-rrfD-thrV-rrfF	rrlD:r	ileU:r	alaU:r	thrV:r	rrfF:r	rrsD:r	rrfD:r
+rrsH-ileV-alaV-rrlH-rrfH	rrsH:r	ileV:r	rrlH:r	rrfH:r	alaV:r
+serV-argVYZQ	serV:r	argY:r	argZ:r	argV:r	argQ:r

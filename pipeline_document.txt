@@ -1,0 +1,63 @@
+# currently omitted
+file_lists.py
+
+# notes:
+# I do not know why I have this program included here.  It appears to be useful for gathering information about sequences, and returning full pathway
+# information.  
+
+usage: file_lists.py [-h] [-i FOLDER] [-o FOLDER] [-f FILE] [-n INT]
+
+Determine information about the genbank files under study, and report this
+information for use by other modules.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i FOLDER, --infolder FOLDER
+                        Folder containing all genbank files for use by the
+                        program.
+  -o FOLDER, --outfolder FOLDER
+                        Folder where results will be stored.
+  -f FILE, --filter FILE
+                        File restrictiong which accession numbers this script
+                        will process. If no file is provided, filtering is not
+                        performed.
+  -n INT, --num_proc INT
+                        Number of processors that you want this script to run
+                        on. The default is every CPU that the system has.
+
+
+regulondb_dl_parse.py
+
+usage: regulondb_dl_parse.py [-h] [-i FOLDER] [-o FOLDER] [-f FILE] [-n INT]
+                             [-d] [-u URL] [-e] [-m INT]
+
+Download and parse a regulonDB operon file, then determine information about
+the component genes by investigating the refrence organisms.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i FOLDER, --infolder FOLDER
+                        Folder containing all genbank files for use by the
+                        program.
+  -o FOLDER, --outfolder FOLDER
+                        Folder where results will be stored.
+  -f FILE, --filter FILE
+                        File restrictiong which accession numbers this script
+                        will process. If no file is provided, filtering is not
+                        performed.
+  -n INT, --num_proc INT
+                        Number of processors that you want this script to run
+                        on. The default is every CPU that the system has.
+  -d, --download        Add this option if you wish to download the regulonDB
+                        operon, otherwise the program will assume that you
+                        have already done this step.
+  -u URL, --url URL     URL to the regulondb OperonSet.txt file.
+  -e, --experimantal    Add this option if you wish to download the regulonDB
+                        operon, otherwise the program will assume that you
+                        have already done this step.
+  -m INT, --min_genes INT
+                        Minum number of genes that an operon must contain
+                        before it can be considered for further analysis. The
+                        default is 5 because that is what we are currently
+                        using in the study.
+
