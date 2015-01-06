@@ -122,7 +122,7 @@ def create_distmat(fname, method = 1):
 
 # this function will take a list of marker genes, as well as a file containing a list of the NC numbers of organisms that we
 # are interest in, and a file that contains the full paths to all genbank files we have.
-# The return will be marker gene files... and i need to prohibit multiple copies of the fuckin genes!!!!  ass clowns aplenty
+# The return will be marker gene files... and i need to prohibit multiple copies of the genes.
 def make_target_fasta(marker_list, org_file, path_file):
     #print "Got here make_target_fasta"
     org_paths = return_full_path(org_file, path_file)
@@ -297,7 +297,7 @@ def parse_operon_result_files(in_folder, distmat_file, dest_folder, operon_file)
         #for i in [i.strip() for i in open(fname).readlines() if len(i) > 1 and i[0] == '#']:
             #if i[:2] == '##':
             if len(i) < 2:
-                print "fuck", i, fname
+                print "errr", i, fname
             if i[0] == '#':
                 comprehensive_list, group_list = group_homologs(tmp_hlog_list_for_grouping, INTERGENIC_MAX_LENGTH)
                 for group in group_list:
