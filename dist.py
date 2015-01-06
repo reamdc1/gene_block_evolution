@@ -1,5 +1,13 @@
 #!/usr/bin/python
 
+# Copyright(C) 2014 David Ream
+# Released under GPL version 3 licence. http://www.gnu.org/licenses/lgpl.html
+# Do not remove this comment
+
+# This script is not part of this project... it's accessory code from before that i am using as a template
+# for a new script.  it will be removed later, so if you are reading this piece of code, it not being
+# used in the project.  Sorry to waste your time.
+
 # I do not know how many of these i need, i will edit later
 import Bio
 import re
