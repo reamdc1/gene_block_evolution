@@ -14,7 +14,8 @@ import argparse
 #########################################################################################################################################
 # I am putting some globals here, they are command line arguments for some of the scripts that we are using.  They are not				#
 # important enough, at least at this time, to justify making them command line arguments for them.  This can be revised					#
-# later, after we get everything running to our satisfaction.  Most likely all/almost all will be removed soon.							#
+# later, or changed by someone who cares too much about these trivial things. after we get everything running to our satisfaction.  	#
+# Most likely all/almost all will be removed because it may tempt someone to ruin what already seems to be working well.				#
 #########################################################################################################################################
 
 # removed from regulondb_dl_parse.py as a command line param for this master script
