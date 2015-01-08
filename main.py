@@ -109,9 +109,9 @@ def main():
     
     infolder, outfolder, filter_file, num_proc, min_genes = check_options(parsed_args)
     
-    print infolder, outfolder, filter_file, num_proc, regulon_download, regulon_url, regulon_experimental_only, min_genes
+    #print infolder, outfolder, filter_file, num_proc, regulon_download, regulon_url, regulon_experimental_only, min_genes
     
-    '''
+    
     # Stage 1: Get operon set and parse into something that we can use
     cmd1 = "./regulondb_dl_parse.py -f %s -i %s -o %s -n %i -u %s -m %i" % (filter_file, infolder, regulon_outfolder, num_proc, regulon_url, min_genes)
     # print "cmd1", cmd1
@@ -153,7 +153,7 @@ def main():
     print cmd5
     os.system(cmd5)
     
-    '''
+    
     
     # Stage 6: filter out spurious results and report the gene blocks that best represent the origional.
     cmd6 = "./filter_operon_blast_results.py -n %i" % (num_proc)
