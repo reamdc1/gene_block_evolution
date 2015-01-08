@@ -125,7 +125,7 @@ def main():
         pass
     else:
         cmd2 = cmd2 + ' -d'
-    print cmd2
+    #print cmd2
     os.system(cmd2)
     
     #Stage 3: make the operon query fasta file(s)
@@ -136,13 +136,13 @@ def main():
     
     
     cmd3 = "./make_operon_query.py -i %s -o %s -p %s -n %i -r %s" % (infolder, operon_query_outfile, operon_file, num_proc, refrence_organism)
-    print cmd3
+    #print cmd3
     os.system(cmd3)
 
     #Stage 4: run BLAST with the query that we made in stage 3, using the databases that we used in stage 2.
     # TODO: add eval filtering here, going with default since i'm low on time.  i will fix in the nex few days
     cmd4 = "./blast_script.py -d %s -o %s -f %s -n %i -q %s" % (BLAST_database_folder, blast_outfolder, filter_file, num_proc, operon_query_outfile)
-    print cmd4
+    #print cmd4
     os.system(cmd4)
     
     # Stage 5: Parse the BLAST result and sort it by gene block
@@ -150,7 +150,7 @@ def main():
     # i'm just trying to get this out the door, everything works how it should, but i am saving time to get this out the door. the final
     # version will implement some ability to control this program's behavior.
     cmd5 = "./blast_parse.py -f %s -n %i" % (filter_file, num_proc)
-    print cmd5
+    #print cmd5
     os.system(cmd5)
     
     
