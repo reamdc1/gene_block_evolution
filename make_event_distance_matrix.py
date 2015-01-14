@@ -346,7 +346,9 @@ def main():
     event_reporting_data_structure = make_event_reporting_data_structure(sorted_gene_block_results, max_gap)
     
     # Step 4: Actually do the compairison and report the result.
-    # it will be keyed as a tuple i guess
+    # It will be keyed {gene_block:{NC1:{NC2:{event1:numeric, event2:numeric, etc:numeric}}}}
+    
+    
         
     #parallel_list_param = [(i, outfolder, max_gap, e_val) for i in file_list]
     
