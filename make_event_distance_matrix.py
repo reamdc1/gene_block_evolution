@@ -292,6 +292,18 @@ def make_event_reporting_data_structure(gene_block_dict, max_gap):
     return result
                 
 
+# This function will return an all vs. all pickled dict of the format: 
+# {gene_block:{NC1:{NC2:{event1:numeric, event2:numeric, etc:numeric}}}}
+def return_event_counts_as_dict(event_reporting_data_structure, outfile):
+    result = {}
+    
+    for gene_block in sorted(event_reporting_data_structure.keys()):
+        org_list = event_reporting_data_structure[gene_block]
+        
+    return result
+
+
+
 # This function will take a list of ordered homologs, and groups them by a max_gap constraint.
 # The return is a list of lists. Single genes and gene blocks will both be represented as groups.
 def homolog_list_grouping_function(list_homologs, max_gap):
