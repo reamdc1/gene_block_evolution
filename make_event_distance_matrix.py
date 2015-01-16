@@ -292,6 +292,19 @@ def make_event_reporting_data_structure(gene_block_dict, max_gap):
     return result
                 
 
+# This function will return the number of splits that two organisms do not share.
+def return_splits(data_struct, org1, org2):
+    if org1 != org2:
+        org1_groups = data_struct[org1]['groups']
+        org2_groups = data_struct[org2]['groups']
+        return int(math.fabs(org1_groups - org2_groups))
+    else:
+        return 0
+
+
+    
+
+
 # This function will return an all vs. all pickled dict of the format: 
 # {gene_block:{NC1:{NC2:{event1:numeric, event2:numeric, etc:numeric}}}}
 def return_event_counts_as_dict(event_reporting_data_structure, outfile):
@@ -301,8 +314,9 @@ def return_event_counts_as_dict(event_reporting_data_structure, outfile):
         org_list = event_reporting_data_structure[gene_block]
         # use the magic that is itertools to make an iterable for all combinations of two organisms for compairison 
         for pair in itertools.combinations_with_replacement(org_list, 2):
-            print "Pair", pair
+            #print "Pair", pair
             org1, org2 = pair
+            
     return result
 
 
