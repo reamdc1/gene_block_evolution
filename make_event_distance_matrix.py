@@ -299,7 +299,10 @@ def return_event_counts_as_dict(event_reporting_data_structure, outfile):
     
     for gene_block in sorted(event_reporting_data_structure.keys()):
         org_list = event_reporting_data_structure[gene_block]
-        
+        # use the magic that is itertools to make an iterable for all combinations of two organisms for compairison 
+        for pair in itertools.combinations_with_replacement(org_list, 2):
+            print "Pair", pair
+            org1, org2 = pair
     return result
 
 
