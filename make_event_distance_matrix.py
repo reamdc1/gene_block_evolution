@@ -301,7 +301,33 @@ def return_splits(data_struct, org1, org2):
     else:
         return 0
 
-
+# this function will return the number of deletions as the number of unique genes they do not share
+def return_deletions(data_struct, org1, org2):
+    if org1 != org2:
+        # yes, the key 'groups' will be here, but since everything has this field, there is no issue on the calculation.
+        gene_list_org1 = data_struct[org1].keys()
+        gene_list_org2 = data_struct[org2].keys()
+        unique_gene_list = [i for i in list(set(gene_list_org1) - set(gene_list_org2)) if i != 'groups']
+        for gene in unique_gene_list:
+            if gene in data_struct[org1].keys():
+                gene1_copy = data_struct[org1][gene]
+            else:
+                gene1_copy = 0
+            if gene in data_struct[org2].keys():
+                gene2_copy = data_struct[org2][gene]
+            else:
+                gene2_copy = 0    
+            
+    else:
+        return 0
+        
+# this function will return the number of deletions as the number of duplicated genes
+def return_duplications(data_struct, org1, org2):
+       if org1 != org2:
+        gene_list_org1 = data_struct[org1].keys()
+        gene_list_org2 = data_struct[org2].keys()
+    else:
+        return 0 
     
 
 
