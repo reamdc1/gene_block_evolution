@@ -308,7 +308,26 @@ def return_splits(data_struct, org1, org2):
 # this function will return the number of deletions as the number of unique genes they do not share
 def return_deletions(data_struct, org1, org2):
     if org1 != org2:
-        # yes, the key 'groups' will be here, but since everything has this field, there is no issue on the calculation.
+        # Removing the key 'genes', and any other non gene information in the reporting data_struct using the ignore_list
+        #gene_list_org1 = data_struct[org1].keys()
+        gene_list_org1 = [i for i in data_struct[org1].keys() if i not in IGNORE_LIST]
+        #gene_list_org2 = data_struct[org2].keys()
+        gene_list_org1 = [i for i in data_struct[org2].keys() if i not in IGNORE_LIST]
+        #unique_gene_list = [i for i in list(set(gene_list_org1) - set(gene_list_org2)) if i not in IGNORE_LIST]
+        unique_gene_list = list(set(gene_list_org1 + gene_list_org2))
+        
+        # Here we determine how many deletions there are in each organism. The total of these deletions is the number
+        # of deletions between the organisms.
+        deletions_in_org1 = len(list(set(unique_gene_list)- set(gene_list_org1)))
+        deletions_in_org2 = len(list(set(unique_gene_list)- set(gene_list_org2)))
+        return deletions_in_org1 + deletions_in_org2
+        
+    else:
+        return 0
+        
+# this function will return the number of deletions as the number of duplicated genes
+def return_duplications(data_struct, org1, org2):
+       if org1 != org2:
         gene_list_org1 = data_struct[org1].keys()
         gene_list_org2 = data_struct[org2].keys()
         unique_gene_list = [i for i in list(set(gene_list_org1) - set(gene_list_org2)) if i not in IGNORE_LIST]
@@ -322,20 +341,18 @@ def return_deletions(data_struct, org1, org2):
             else:
                 gene2_copy_number = 0
                 
-            # So now we check to see 
-            
-    else:
-        return 0
-        
-# this function will return the number of deletions as the number of duplicated genes
-def return_duplications(data_struct, org1, org2):
-       if org1 != org2:
-        gene_list_org1 = data_struct[org1].keys()
-        gene_list_org2 = data_struct[org2].keys()
+            # So now we check to see
     else:
         return 0 
     
-
+# This function will return the rearrangement distance between two organisms by using the levinstein edit distance
+# as a rough metric.  
+def return_rearrangements(sorted_gene_block_results, org1, org2):
+    if org1 != org2:
+        pass
+    else:
+        return 0 
+ 
 
 # This function will return an all vs. all pickled dict of the format: 
 # {gene_block:{NC1:{NC2:{event1:numeric, event2:numeric, etc:numeric}}}}
