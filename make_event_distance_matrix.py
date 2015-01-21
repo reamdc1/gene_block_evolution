@@ -264,6 +264,10 @@ def return_gene_block_organism_data(flist):
 
     return result
 
+# adding a list of keys that are not the names of genes. These keys exist to keep track of non-gene information about the 
+# gene blocks that were are investigating.
+IGNORE_LIST = ['groups']
+
 
 # This function strips the necessary information about the homologs that we report per gene block/organism pair
 # so that event determination between different organisms can be performed.  No events are determined in this stage,
@@ -307,16 +311,18 @@ def return_deletions(data_struct, org1, org2):
         # yes, the key 'groups' will be here, but since everything has this field, there is no issue on the calculation.
         gene_list_org1 = data_struct[org1].keys()
         gene_list_org2 = data_struct[org2].keys()
-        unique_gene_list = [i for i in list(set(gene_list_org1) - set(gene_list_org2)) if i != 'groups']
+        unique_gene_list = [i for i in list(set(gene_list_org1) - set(gene_list_org2)) if i not in IGNORE_LIST]
         for gene in unique_gene_list:
             if gene in data_struct[org1].keys():
-                gene1_copy = data_struct[org1][gene]
+                gene1_copy_number = data_struct[org1][gene]
             else:
-                gene1_copy = 0
+                gene1_copy_number = 0
             if gene in data_struct[org2].keys():
-                gene2_copy = data_struct[org2][gene]
+                gene2_copy_number = data_struct[org2][gene]
             else:
-                gene2_copy = 0    
+                gene2_copy_number = 0
+                
+            # So now we check to see 
             
     else:
         return 0
