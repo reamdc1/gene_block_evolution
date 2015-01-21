@@ -10,6 +10,7 @@ from homolog4 import *
 from collections import defaultdict
 import itertools
 from collections import Counter
+from Levenshtein import distance
 
 
 # Copyright(C) 2014 David Ream
@@ -342,8 +343,8 @@ def return_duplications(data_struct, org1, org2):
                 gene2_copy_number = 0
                 
             # So now we check to see
-    else:
-        return 0 
+        else:
+            return 0 
     
 # This function will return the rearrangement distance between two organisms by using the levinstein edit distance
 # as a rough metric.  
@@ -366,6 +367,31 @@ def return_event_counts_as_dict(event_reporting_data_structure, outfile):
             #print "Pair", pair
             org1, org2 = pair
             
+    return result
+
+
+# TODO:  Change this function to accept a list of unique genes between two organisms.  
+# The function will then return a dictionary, that is keyed by the gene name, a mapping
+# to a single character.  This will be used to determine the Levenshtein edit distance. 
+def make_operon_gene_string_dict(operon_file = './operon_name_and_genes.txt'):
+    result = {}
+    
+    print operon_file
+    for line in [i.strip().split('\t') for i in open(operon_file).readlines()]:
+        operon = line[0]
+        print operon
+        result.update({operon:{'reference_string': ''}})
+        
+        # Returns the genes in order and a corresponding index. This index will be used to generate the
+        # unicode integer of capital letters (as they are lower numerically than lower case).
+        
+        operon_genes_in_order = parse_operon_name(operon)
+        #for gene, index in zip(line[1:], range(0,len(line[1:]))):
+        for gene, index in zip(operon_genes_in_order, range(0,len(operon_genes_in_order))):
+            print gene
+            result[operon].update({gene:chr(65+index)})
+            result[operon].update({'reference_string': result[operon]['reference_string'] +  chr(65+index)})
+        print operon, result[operon], len(result)
     return result
 
 
