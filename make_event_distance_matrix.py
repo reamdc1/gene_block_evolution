@@ -327,8 +327,18 @@ def return_deletions(data_struct, org1, org2):
         return 0
         
 # this function will return the number of deletions as the number of duplicated genes
+# TODO, finish this code :) missing the calculation part that we sorta need :) :)
 def return_duplications(data_struct, org1, org2):
-       if org1 != org2:
+    if org1 != org2:
+        '''try:
+            gene_list_org1 = data_struct[org1].keys()
+        except:
+            print "org1", org1
+        try:
+            gene_list_org2 = data_struct[org2].keys()
+        except:
+            print "org2", org2
+        '''
         gene_list_org1 = data_struct[org1].keys()
         gene_list_org2 = data_struct[org2].keys()
         unique_gene_list = [i for i in list(set(gene_list_org1) - set(gene_list_org2)) if i not in IGNORE_LIST]
@@ -357,7 +367,7 @@ def return_rearrangements(sorted_gene_block_results, org1, org2):
 
 # This function will return an all vs. all pickled dict of the format: 
 # {gene_block:{NC1:{NC2:{event1:numeric, event2:numeric, etc:numeric}}}}
-def return_event_counts_as_dict(event_reporting_data_structure, outfile):
+def return_event_counts_as_dict(event_reporting_data_structure):
     result = {}
     
     for gene_block in sorted(event_reporting_data_structure.keys()):
@@ -366,32 +376,22 @@ def return_event_counts_as_dict(event_reporting_data_structure, outfile):
         for pair in itertools.combinations_with_replacement(org_list, 2):
             #print "Pair", pair
             org1, org2 = pair
+            duplications = return_duplications(event_reporting_data_structure[gene_block], org1, org2)
+            print "duplications", duplications
+            splits = return_splits(event_reporting_data_structure[gene_block], org1, org2)
+            print "splits", splits
             
     return result
 
 
-# TODO:  Change this function to accept a list of unique genes between two organisms.  
-# The function will then return a dictionary, that is keyed by the gene name, a mapping
-# to a single character.  This will be used to determine the Levenshtein edit distance. 
-def make_operon_gene_string_dict(operon_file = './operon_name_and_genes.txt'):
+# Take a list of unique genes between two organisms and return a mapping for gene name to a single character.  
+# This will be used to determine the Levenshtein edit distance. 
+def make_gene_string_dict(gene_list):
     result = {}
-    
-    print operon_file
-    for line in [i.strip().split('\t') for i in open(operon_file).readlines()]:
-        operon = line[0]
-        print operon
-        result.update({operon:{'reference_string': ''}})
-        
-        # Returns the genes in order and a corresponding index. This index will be used to generate the
-        # unicode integer of capital letters (as they are lower numerically than lower case).
-        
-        operon_genes_in_order = parse_operon_name(operon)
-        #for gene, index in zip(line[1:], range(0,len(line[1:]))):
-        for gene, index in zip(operon_genes_in_order, range(0,len(operon_genes_in_order))):
-            print gene
-            result[operon].update({gene:chr(65+index)})
-            result[operon].update({'reference_string': result[operon]['reference_string'] +  chr(65+index)})
-        print operon, result[operon], len(result)
+    for gene, index in zip(gene_list, range(0,len(gene_list))):
+        print gene
+        result.update({gene:chr(65+index)})
+    #print operon, result[operon], len(result)
     return result
 
 
@@ -448,6 +448,10 @@ def main():
     
     # return a dict that contains the raw information needed to make a between organismal compairison of the events used in our method.
     event_reporting_data_structure = make_event_reporting_data_structure(sorted_gene_block_results, max_gap)
+    
+    event_count_dict = return_event_counts_as_dict(event_reporting_data_structure)
+    
+    
     
     # Step 4: Actually do the compairison and report the result.
     # It will be keyed {gene_block:{NC1:{NC2:{event1:numeric, event2:numeric, etc:numeric}}}}
