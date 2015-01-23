@@ -380,6 +380,8 @@ def return_event_counts_as_dict(event_reporting_data_structure):
             print "duplications", duplications
             splits = return_splits(event_reporting_data_structure[gene_block], org1, org2)
             print "splits", splits
+            deletions = return_deletions(event_reporting_data_structure[gene_block], org1, org2)
+            print "Deletions", deletions
             
     return result
 
