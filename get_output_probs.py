@@ -147,7 +147,8 @@ def loop_events(all_evop, operon):
         for event_type in all_evop[operon][(species_i,species_j)]:
 #            print event_type
 #            print "mean, std", event_mean[event_type], event_std[event_type]
-            event_zscore[(species_i,species_j)][event_type] = ((all_evop[operon][(species_i,species_j)][event_type] - event_mean[event_type]) / event_std[event_type])
+            event_zscore[(species_i,species_j)][event_type] = ((all_evop[operon][(species_i,species_j)][event_type] - event_mean[event_type]) 
+            / float(event_std[event_type]))
 
     return event_zscore
 

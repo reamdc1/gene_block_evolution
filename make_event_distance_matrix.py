@@ -11,6 +11,7 @@ from collections import defaultdict
 import itertools
 from collections import Counter
 from Levenshtein import distance
+import cPickle as pickle
 
 
 # Copyright(C) 2014 David Ream
@@ -480,15 +481,16 @@ def main():
     # return a dict that contains the raw information needed to make a between organismal compairison of the events used in our method.
     event_reporting_data_structure = make_event_reporting_data_structure(sorted_gene_block_results, max_gap)
     
+
+    # Step 4: Actually do the compairison and report the result.
+    # It will be keyed {gene_block:{NC1:{NC2:{event1:numeric, event2:numeric, etc:numeric}}}}
+    
     event_count_dict = return_event_counts_as_dict(event_reporting_data_structure)
     
     print event_count_dict.keys()
     
-    
-    
-    # Step 4: Actually do the compairison and report the result.
-    # It will be keyed {gene_block:{NC1:{NC2:{event1:numeric, event2:numeric, etc:numeric}}}}
-    
+    outfile = './event_dict.p'
+    pickle.dump(event_count_dict, open(outfile, 'w'))
     
         
     #parallel_list_param = [(i, outfolder, max_gap, e_val) for i in file_list]
