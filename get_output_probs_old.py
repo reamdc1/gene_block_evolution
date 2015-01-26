@@ -1,41 +1,11 @@
-#!/usr/bin/python
 
 from collections import defaultdict
 import cPickle
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-import os
-import argparse
-
-
-# Copyright(C) 2014 Iddo Friedberg and David Ream
-# Released under GPL version 3 licence. http://www.gnu.org/licenses/lgpl.html
-# Do not remove this comment
-
 
 # all_evop == a dicitonary with all events and operons
-
-
-# This exists to  make the main function easier to read. It contains code to run the argument parser, and does nothing else.
-def parser_code():
-
-    parser = argparse.ArgumentParser(description="This program will compute a z-score matrix for a pairwise event distance matrix.")
-    
-    parser.add_argument("-i", "--infile", dest="infile", default='NONE', metavar="FILE", required = True,
-                help="A pickled dictionary containing pairwaise event compairisons.")
-                
-    return parser.parse_args()
-
-def check_options(parsed_args):
-
-    if os.path.exists(parsed_args.infile):
-        infile = parsed_args.infile
-    else:
-        print "The file %s does not exist." % parsed_args.infile
-        sys.exit()  
-
-    return infile
 
 event_types = ['deletions','splits','duplications']
 def read_events(inpath):
@@ -147,24 +117,19 @@ def loop_events(all_evop, operon):
         for event_type in all_evop[operon][(species_i,species_j)]:
 #            print event_type
 #            print "mean, std", event_mean[event_type], event_std[event_type]
-            event_zscore[(species_i,species_j)][event_type] = ((all_evop[operon][(species_i,species_j)][event_type] - event_mean[event_type]) / event_std[event_type])
+            event_zscore[(species_i,species_j)][event_type] = (
+               (all_evop[operon][(species_i,species_j)][event_type] - event_mean[event_type]) / 
+                                 event_std[event_type])
 
     return event_zscore
 
             
 
 if __name__ == '__main__':
-
-    parsed_args = parser_code()
-    
-    infile = check_options(parsed_args)
-
-    #all_evop = reduce_event_matrix(sys.argv[1])
-    all_evop = reduce_event_matrix(infile)
+    all_evop = reduce_event_matrix(sys.argv[1])
     
 #    all_loop_operons(all_evop)
     all_event_zscore = all_loop_events(all_evop)
-    #cPickle.dump(all_event_zscore,open("%s.events.pik" % sys.argv[1],"w"))
-    cPickle.dump(all_event_zscore,open("%s.events.pik" % infile,"w"))
+    cPickle.dump(all_event_zscore,open("%s.events.pik" % sys.argv[1],"w"))
 
     

@@ -313,7 +313,7 @@ def return_deletions(data_struct, org1, org2):
         #gene_list_org1 = data_struct[org1].keys()
         gene_list_org1 = [i for i in data_struct[org1].keys() if i not in IGNORE_LIST]
         #gene_list_org2 = data_struct[org2].keys()
-        gene_list_org1 = [i for i in data_struct[org2].keys() if i not in IGNORE_LIST]
+        gene_list_org2 = [i for i in data_struct[org2].keys() if i not in IGNORE_LIST]
         #unique_gene_list = [i for i in list(set(gene_list_org1) - set(gene_list_org2)) if i not in IGNORE_LIST]
         unique_gene_list = list(set(gene_list_org1 + gene_list_org2))
         
@@ -329,20 +329,13 @@ def return_deletions(data_struct, org1, org2):
 # this function will return the number of deletions as the number of duplicated genes
 # TODO, finish this code :) missing the calculation part that we sorta need :) :)
 def return_duplications(data_struct, org1, org2):
+    result = 0
     if org1 != org2:
-        '''try:
-            gene_list_org1 = data_struct[org1].keys()
-        except:
-            print "org1", org1
-        try:
-            gene_list_org2 = data_struct[org2].keys()
-        except:
-            print "org2", org2
-        '''
         gene_list_org1 = data_struct[org1].keys()
         gene_list_org2 = data_struct[org2].keys()
         unique_gene_list = [i for i in list(set(gene_list_org1) - set(gene_list_org2)) if i not in IGNORE_LIST]
         for gene in unique_gene_list:
+            duplications = 0
             if gene in data_struct[org1].keys():
                 gene1_copy_number = data_struct[org1][gene]
             else:
@@ -352,17 +345,32 @@ def return_duplications(data_struct, org1, org2):
             else:
                 gene2_copy_number = 0
                 
-            # So now we check to see
-        else:
-            return 0 
-    
-# This function will return the rearrangement distance between two organisms by using the levinstein edit distance
-# as a rough metric.  
-def return_rearrangements(sorted_gene_block_results, org1, org2):
-    if org1 != org2:
-        pass
+            #########################################################################################################################
+            # This is where we calculate duplications.  The issues here are that we first consider a deletion BEFORE a duplication.	# 
+            #  Therefore if organism 1 lacks a gene, for this explanation call it gene 'A', and organism 2 has two copies of it, we	#
+            # will say that the first copy of gene A in organism 1 is deleted with respect to organism 2.  Similarily the second 	#
+            # of this gene is a duplication.  This will yield the situation where we count one deletion and one duplication for this#
+            # situation.																											#
+            #########################################################################################################################
+            
+            gene_list = [gene1_copy_number, gene2_copy_number]
+            
+            # if one organisms is missing the gene entirely
+            if min(gene_list) == 0:
+                duplications =  sum(gene_list) - 1
+            # if both organisms have the gene
+            else:
+                duplications =  int(math.fabs(gene1_copy_number - gene2_copy_number))
+            #if duplications >0:
+            #    print "yahoo"
+            
+            result += duplications   
+                    
     else:
-        return 0 
+        # org 1 and org2 are the same, so we do nothing
+        pass
+        
+    return result
  
 
 # This function will return an all vs. all pickled dict of the format: 
@@ -371,21 +379,42 @@ def return_event_counts_as_dict(event_reporting_data_structure):
     result = {}
     
     for gene_block in sorted(event_reporting_data_structure.keys()):
+        result.update({gene_block:{}})
         org_list = event_reporting_data_structure[gene_block]
         # use the magic that is itertools to make an iterable for all combinations of two organisms for compairison 
         for pair in itertools.combinations_with_replacement(org_list, 2):
             #print "Pair", pair
             org1, org2 = pair
-            duplications = return_duplications(event_reporting_data_structure[gene_block], org1, org2)
-            print "duplications", duplications
-            splits = return_splits(event_reporting_data_structure[gene_block], org1, org2)
-            print "splits", splits
             deletions = return_deletions(event_reporting_data_structure[gene_block], org1, org2)
-            print "Deletions", deletions
+            duplications = return_duplications(event_reporting_data_structure[gene_block], org1, org2)
+            splits = return_splits(event_reporting_data_structure[gene_block], org1, org2)
             
+            #print "Deletions", deletions, "Duplications", duplications, "Splits", splits
+            
+            # There is a faster implementation that uses a try except... which i have been kind enough to include if speed is you thing.
+            # on small lists of organisms it really does not matter
+            if org1 in result[gene_block].keys():
+                result[gene_block][org1].update({org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}})
+            else:
+                result[gene_block].update({org1:{org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}}})
+            '''    
+            try:
+                result[gene_block][org1].update({org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}})
+            except:
+                result[gene_block].update({org1:{org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}}})
+            '''
     return result
 
-
+# This function will return the rearrangement distance between two organisms by using the levinstein edit distance
+# as a rough metric.  
+def return_rearrangements(sorted_gene_block_results, org1, org2):
+    if org1 != org2:
+        pass
+    else:
+        return 0 
+        
+        
+        
 # Take a list of unique genes between two organisms and return a mapping for gene name to a single character.  
 # This will be used to determine the Levenshtein edit distance. 
 def make_gene_string_dict(gene_list):
@@ -452,6 +481,8 @@ def main():
     event_reporting_data_structure = make_event_reporting_data_structure(sorted_gene_block_results, max_gap)
     
     event_count_dict = return_event_counts_as_dict(event_reporting_data_structure)
+    
+    print event_count_dict.keys()
     
     
     
