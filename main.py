@@ -159,7 +159,7 @@ def main():
     #Stage 4: run BLAST with the query that we made in stage 3, using the databases that we used in stage 2.
     # TODO: add eval filtering here, going with default since i'm low on time.  i will fix in the nex few days
     cmd4 = "./blast_script.py -d %s -o %s -f %s -n %i -q %s -e %f" % (BLAST_database_folder, blast_outfolder, filter_file, num_proc, operon_query_outfile, e_val)
-    #print cmd4
+    print cmd4
     os.system(cmd4)
     
     # Stage 5: Parse the BLAST result and sort it by gene block
