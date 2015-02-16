@@ -51,7 +51,7 @@ def parser_code():
     parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="FOLDER", default='./regulonDB/',
                 help="Folder where results will be stored.")
     
-    parser.add_argument("-f", "--filter", dest="filter", metavar="FILE", default='NONE',
+    parser.add_argument("-f", "--filter", dest="filter", metavar="FILE", default='./phylo_order.txt',
                 help="File restrictiong which accession numbers this script will process. If no file is provided, filtering is not performed.")
                 
     parser.add_argument("-n", "--num_proc", dest="num_proc", metavar="INT", default = os.sysconf("SC_NPROCESSORS_CONF"), type=int,
@@ -115,7 +115,8 @@ def check_options(parsed_args):
         print "The gap that you entered %s is not an integer, please enter a positive integer." % parsed_args.max_gap
         sys.exit()
         
-    e_val = float(parsed_args.eval)
+    #e_val = float(parsed_args.eval)
+    e_val = parsed_args.eval
 
     return infolder, outfolder, filter_file, num_proc, min_genes, max_gap, e_val
 
