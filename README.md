@@ -1,7 +1,7 @@
 In this document I will explain how to use the software contained in this project. 
 
 The easiest way to run the project is to execute the script named 'main.py'.  The defaults
-that are provided are sufficient to run the project with the inputs provided.  
+that are provided are sufficient to run the project with the inputs provided.
 Each accompanying script can be run on its own as well.  main.py does not allow for the intermediate
 files or folders to be renamed by the user.  Currently the user cannot select the point that analysis
 begins at through main.py, but this functionality will be added later.

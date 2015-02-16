@@ -300,12 +300,15 @@ def make_event_reporting_data_structure(gene_block_dict, max_gap):
 
 # This function will return the number of splits that two organisms do not share.
 def return_splits(data_struct, org1, org2):
+    result = 0
     if org1 != org2:
         org1_groups = data_struct[org1]['groups']
         org2_groups = data_struct[org2]['groups']
-        return int(math.fabs(org1_groups - org2_groups))
+        result = int(math.fabs(org1_groups - org2_groups))
     else:
-        return 0
+        pass
+        
+    return result
 
 # this function will return the number of deletions as the number of unique genes they do not share
 def return_deletions(data_struct, org1, org2):
@@ -328,7 +331,6 @@ def return_deletions(data_struct, org1, org2):
         return 0
         
 # this function will return the number of deletions as the number of duplicated genes
-# TODO, finish this code :) missing the calculation part that we sorta need :) :)
 def return_duplications(data_struct, org1, org2):
     result = 0
     if org1 != org2:
@@ -362,8 +364,6 @@ def return_duplications(data_struct, org1, org2):
             # if both organisms have the gene
             else:
                 duplications =  int(math.fabs(gene1_copy_number - gene2_copy_number))
-            #if duplications >0:
-            #    print "yahoo"
             
             result += duplications   
                     
@@ -394,7 +394,7 @@ def return_event_counts_as_dict(event_reporting_data_structure):
             
             # There is a faster implementation that uses a try except... which i have been kind enough to include if speed is you thing.
             # on small lists of organisms it really does not matter
-            if org1 in result[gene_block].keys():
+            '''if org1 in result[gene_block].keys():
                 result[gene_block][org1].update({org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}})
             else:
                 result[gene_block].update({org1:{org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}}})
@@ -403,7 +403,7 @@ def return_event_counts_as_dict(event_reporting_data_structure):
                 result[gene_block][org1].update({org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}})
             except:
                 result[gene_block].update({org1:{org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}}})
-            '''
+            
     return result
 
 # This function will return the rearrangement distance between two organisms by using the levinstein edit distance
@@ -413,9 +413,7 @@ def return_rearrangements(sorted_gene_block_results, org1, org2):
         pass
     else:
         return 0 
-        
-        
-        
+               
 # Take a list of unique genes between two organisms and return a mapping for gene name to a single character.  
 # This will be used to determine the Levenshtein edit distance. 
 def make_gene_string_dict(gene_list):
@@ -425,8 +423,6 @@ def make_gene_string_dict(gene_list):
         result.update({gene:chr(65+index)})
     #print operon, result[operon], len(result)
     return result
-
-
 
 # This function will take a list of ordered homologs, and groups them by a max_gap constraint.
 # The return is a list of lists. Single genes and gene blocks will both be represented as groups.
@@ -487,7 +483,7 @@ def main():
     
     event_count_dict = return_event_counts_as_dict(event_reporting_data_structure)
     
-    print event_count_dict.keys()
+    print "Length", len(event_count_dict.keys()), event_count_dict.keys()
     
     outfile = './event_dict.p'
     pickle.dump(event_count_dict, open(outfile, 'w'))

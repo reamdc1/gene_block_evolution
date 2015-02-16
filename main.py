@@ -59,6 +59,12 @@ def parser_code():
 
     parser.add_argument("-m", "--min_genes", dest="min_genes", metavar="INT", default = 5, type=int,
                 help="Minum number of genes that an operon must contain before it can be considered for further analysis. The default is 5 because that is what we are currently using in the study.")
+    
+    parser.add_argument("-g", "--max_gap", dest="max_gap", metavar="INT", default = 500, type=int,
+                help="Size in nucleotides of the maximum gap allowed between genes to be considered neighboring. The default is 500.")
+                
+    parser.add_argument("-e", "--eval", dest="eval", default='1e-10', metavar="FLOAT", type=float,
+                help="eval for the BLAST search.")
                        
     return parser.parse_args()
     
@@ -96,8 +102,22 @@ def check_options(parsed_args):
         min_genes = 1
     else:
         min_genes = parsed_args.min_genes
+        
+    # validate the input for the maximum allowed gap
+    try:    
+        max_gap = int(parsed_args.max_gap)
+        if max_gap <= 0:
+           print "The gap that you entered %s is a negative number, please enter a positive integer." % parsed_args.max_gap
+           sys.exit()
+        else:
+           pass
+    except:
+        print "The gap that you entered %s is not an integer, please enter a positive integer." % parsed_args.max_gap
+        sys.exit()
+        
+    e_val = float(parsed_args.eval)
 
-    return infolder, outfolder, filter_file, num_proc, min_genes
+    return infolder, outfolder, filter_file, num_proc, min_genes, max_gap, e_val
 
     
     
@@ -107,7 +127,7 @@ def main():
 
     parsed_args = parser_code()
     
-    infolder, outfolder, filter_file, num_proc, min_genes = check_options(parsed_args)
+    infolder, outfolder, filter_file, num_proc, min_genes, max_gap, e_val = check_options(parsed_args)
     
     #print infolder, outfolder, filter_file, num_proc, regulon_download, regulon_url, regulon_experimental_only, min_genes
     
@@ -129,9 +149,6 @@ def main():
     os.system(cmd2)
     
     #Stage 3: make the operon query fasta file(s)
-    # This is the default location for where the parsed regulonDB file will be stored, and is a necessary input.
-    # TODO: change the regulonDB script to allow the explicit naming of the desired output file. I can make this non-selectable
-    # as well since no one should care, like ever about something so trivial.
     operon_file = regulon_outfolder + 'operon_names_and_genes.txt'
     
     
@@ -141,7 +158,7 @@ def main():
 
     #Stage 4: run BLAST with the query that we made in stage 3, using the databases that we used in stage 2.
     # TODO: add eval filtering here, going with default since i'm low on time.  i will fix in the nex few days
-    cmd4 = "./blast_script.py -d %s -o %s -f %s -n %i -q %s" % (BLAST_database_folder, blast_outfolder, filter_file, num_proc, operon_query_outfile)
+    cmd4 = "./blast_script.py -d %s -o %s -f %s -n %i -q %s -e %f" % (BLAST_database_folder, blast_outfolder, filter_file, num_proc, operon_query_outfile, e_val)
     #print cmd4
     os.system(cmd4)
     
@@ -156,7 +173,7 @@ def main():
     
     
     # Stage 6: filter out spurious results and report the gene blocks that best represent the origional.
-    cmd6 = "./filter_operon_blast_results.py -n %i" % (num_proc)
+    cmd6 = "./filter_operon_blast_results.py -n %i -g %i" % (num_proc, max_gap)
     print cmd6
     os.system(cmd6)
     
