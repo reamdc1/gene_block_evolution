@@ -1,11 +1,14 @@
 astCADBE	astA:p	astB:p	astC:p	astD:p	astE:p
 atpIBEFHAGDC	atpI:p	atpH:p	atpC:p	atpB:p	atpA:p	atpG:p	atpF:p	atpE:p	atpD:p
-bamA-hlpA-lpxD-fabZ-lpxAB-rnhB-dnaE	hlpA:p	dnaE:p	rnhB:p	lpxA:p	lpxB:p	lpxD:p	bamA:p	fabZ:p
+bamA-skp-lpxD-fabZ-lpxAB-rnhB-dnaE	dnaE:p	skp:p	rnhB:p	lpxA:p	lpxB:p	lpxD:p	bamA:p	fabZ:p
 caiTABCDE	caiA:p	caiE:p	caiD:p	caiC:p	caiB:p	caiT:p
 casABCDE12	casE:p	casD:p	casA:p	casC:p	casB:p	cas1:p	cas2:p
+chbBCARFG	chbG:p	chbF:p	chbC:p	chbB:p	chbA:p	chbR:p
+cyoABCDE	cyoA:p	cyoC:p	cyoB:p	cyoE:p	cyoD:p
 cysPUWAM	cysU:p	cysM:p	cysW:p	cysA:p	cysP:p
 dppABCDF	dppA:p	dppB:p	dppC:p	dppD:p	dppF:p
 fecABCDE	fecD:p	fecE:p	fecB:p	fecC:p	fecA:p
+flgBCDEFGHIJ	flgC:p	flgB:p	flgG:p	flgF:p	flgE:p	flgD:p	flgJ:p	flgI:p	flgH:p
 fliFGHIJK	fliI:p	fliH:p	fliK:p	fliJ:p	fliG:p	fliF:p
 fucPIKUR	fucU:p	fucR:p	fucK:p	fucP:p	fucI:p
 gatYZABCD	gatY:p	gatZ:p	gatD:p	gatA:p	gatB:p	gatC:p
@@ -43,7 +46,6 @@ thiCEFSGH	thiS:p	thiH:p	thiC:p	thiG:p	thiF:p	thiE:p
 thrS-infC-rpmI-rplT-pheMST-ihfA	rpmI:p	pheS:p	pheT:p	ihfA:p	rplT:p	infC:p	thrS:p	pheM:p
 trpLEDCBA	trpL:p	trpB:p	trpC:p	trpA:p	trpD:p	trpE:p
 ulaABCDEF	ulaD:p	ulaE:p	ulaF:p	ulaA:p	ulaB:p	ulaC:p
-waaQGPSBIJYZU	waaS:p	waaB:p	waaQ:p	waaP:p	waaG:p	waaU:p	waaZ:p	waaJ:p	waaI:p	waaY:p
 ybgIJKL-nei	ybgI:p	ybgJ:p	ybgK:p	ybgL:p	nei:p
 yceD-rpmF-plsX-fabHDG-acpP-fabF	fabD:p	fabG:p	fabF:p	acpP:p	yceD:p	plsX:p	fabH:p	rpmF:p
 ydgK-rsxABCDGE-nth	rsxA:p	ydgK:p	rsxC:p	rsxB:p	rsxE:p	rsxD:p	rsxG:p	nth:p

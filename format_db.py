@@ -23,10 +23,10 @@ def parser_code():
 
     parser = argparse.ArgumentParser(description='Convert all genbank files found in a specified folder, and optionally a file containing the accessions that you wish to include, and create BLAST searchable databases from them.')
 
-    parser.add_argument("-i", "--infolder", dest="infolder", metavar="FOLDER", default='./genomes/',
+    parser.add_argument("-i", "--infolder", dest="infolder", metavar="DIRECTORY", default='./genomes/',
                 help="Folder containing all genbank files for use by the program.")
                  
-    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="FOLDER", default='./db/',
+    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="DIRECTORY", default='./db/',
                 help="Folder where the BLAST searchable databases will be stored.")
     
     parser.add_argument("-f", "--filter", dest="filter", metavar="FILE", default='NONE',
@@ -35,7 +35,7 @@ def parser_code():
     parser.add_argument("-n", "--num_proc", dest="num_proc", metavar="INT", default = os.sysconf("SC_NPROCESSORS_CONF"), type=int,
                 help="Number of processors that you want this script to run on. The default is every CPU that the system has.")
                 
-    parser.add_argument("-p", "--protein", dest="protein", default=True, action='store_false',
+    parser.add_argument("-p", "--protein", dest="protein", default=True, action='store_false', metavar="BOOLEAN",
                 help="Flag to toggle mode from protein to DNA sequences for use as database construction. The default is protein.")
                 
     return parser.parse_args()

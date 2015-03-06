@@ -24,7 +24,7 @@ def parser_code():
 
     parser = argparse.ArgumentParser(description='Convert an operon file into a BLAST query using one or more reference organisms.')
     
-    parser.add_argument("-i", "--infolder", dest="infolder", metavar="FOLDER", default='./genomes/',
+    parser.add_argument("-i", "--infolder", dest="infolder", metavar="DIRECTORY", default='./genomes/',
                 help="Folder containing all genbank files for use by the program. The refrence genbank file must reside here.")
                  
     parser.add_argument("-o", "--outfile", dest="outfile", metavar="FILE", default='./operon_query.fa',

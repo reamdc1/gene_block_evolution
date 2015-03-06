@@ -19,10 +19,10 @@ def parser_code():
 
     parser = argparse.ArgumentParser(description="This program will be used to remove spurious results from a BLAST search organized by operon.")
     
-    parser.add_argument("-i", "--infolder", dest="infolder", default='./blast_parse/', metavar="FOLDER",
+    parser.add_argument("-i", "--infolder", dest="infolder", default='./blast_parse/', metavar="DIRECTORY",
                 help="A folder that contains the operon BLAST results.")
     
-    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="FOLDER", default='./optimized_operon/',
+    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="DIRECTORY", default='./optimized_operon/',
                 help="Folder where the filtered results will be stored. Default is the folder './optimized_operon/'.")
 
     parser.add_argument("-f", "--filter", dest="filter", default='', metavar="FILE",
@@ -261,9 +261,9 @@ def return_best_singleton_genes(grouped_lists):
     # return a list of evey homolog found by BLAST as a single list
     organism_genes = list(itertools.chain(*grouped_lists))
     # make list above unique based on the blast_annotation
-    unique_in_organism_by_annotation = make_unique(organism_genes, lambda x: x.blast_annatation())
+    unique_in_organism_by_annotation = make_unique(organism_genes, lambda x: x.blast_annotation())
     # resulting in a list of annotations that are unique to the organism
-    organism_annotation_list = [i.blast_annatation() for i in unique_in_organism_by_annotation]
+    organism_annotation_list = [i.blast_annotation() for i in unique_in_organism_by_annotation]
     
     #print "organism_annotation_list", organism_annotation_list
     
@@ -274,9 +274,9 @@ def return_best_singleton_genes(grouped_lists):
     # make into a single list of homologs
     neighborhood_hlog_list = list(itertools.chain(*neighborhoods_only))
     # make list above unique based on the blast_annotation
-    unique_neighborhood_by_annotation = make_unique(neighborhood_hlog_list, lambda x: x.blast_annatation())
+    unique_neighborhood_by_annotation = make_unique(neighborhood_hlog_list, lambda x: x.blast_annotation())
     # resulting in a list of annotations that are unique to neighboring genes
-    neighborhood_annotation_list = [i.blast_annatation() for i in unique_neighborhood_by_annotation]
+    neighborhood_annotation_list = [i.blast_annotation() for i in unique_neighborhood_by_annotation]
     
     #print "neighborhood_annotation_list", neighborhood_annotation_list
     
@@ -284,21 +284,21 @@ def return_best_singleton_genes(grouped_lists):
     # Step 3: return a list of singletons genes, that are only found as singletons in the current genome
     single_annotation_list = list(set(organism_annotation_list) - set(neighborhood_annotation_list))
     singleton_genes = [i for i in grouped_lists if len(i) == 1]
-    filtered_singlgeton_genes = [i for i in singleton_genes if i[0].blast_annatation() in single_annotation_list]
+    filtered_singlgeton_genes = [i for i in singleton_genes if i[0].blast_annotation() in single_annotation_list]
     
     # Step 4: Find the singleton gene that has the most significant e-value per BLAST annotation
     best_singleton_dict = {}
     for tmp in filtered_singlgeton_genes:
         gene = tmp[0]
         # a singleton gene with this annotation has already been found, use e-val to determine wich is the more significant hit
-        if gene.blast_annatation() in best_singleton_dict.keys():
-            old_gene = best_singleton_dict.pop(gene.blast_annatation())
+        if gene.blast_annotation() in best_singleton_dict.keys():
+            old_gene = best_singleton_dict.pop(gene.blast_annotation())
             if old_gene.e_val() <= gene.e_val(): # the existing homolog is a more significant hit
-                best_singleton_dict.update({gene.blast_annatation(): old_gene})
+                best_singleton_dict.update({gene.blast_annotation(): old_gene})
             else: # the new homolog is a more significant hit
-                best_singleton_dict.update({gene.blast_annatation(): gene})
+                best_singleton_dict.update({gene.blast_annotation(): gene})
         else: # we have not seen this annotation yet, store it in the dictionary
-            best_singleton_dict.update({gene.blast_annatation(): gene})
+            best_singleton_dict.update({gene.blast_annotation(): gene})
             
     # Step 5: return a list of lists, [[s1], [s2], [s3]] for each entry in the best_singleton_dict.
     for i in best_singleton_dict.keys():
@@ -321,8 +321,8 @@ def optimize_neighborhoods(grouped_lists):
     # Step 2: determine the number of unique genes in both neighborhoods, and the organism.
     # To better explain: I need to know the number of unique genes the organism contains for the gene block.
     # I also need to know the number of unique genes found in neighborhoods. 
-    number_unique_genes_in_organism = len(make_unique(org_hlog_list, lambda x: x.blast_annatation()))
-    number_unique_in_neighborhoods = len(make_unique(grouped_hlog_list, lambda x: x.blast_annatation()))
+    number_unique_genes_in_organism = len(make_unique(org_hlog_list, lambda x: x.blast_annotation()))
+    number_unique_in_neighborhoods = len(make_unique(grouped_hlog_list, lambda x: x.blast_annotation()))
     
     '''
     # Debugging.  This does check out.  kinda interesting stuff though here, there are some inline tandem repeats where gene name is different.
@@ -332,7 +332,7 @@ def optimize_neighborhoods(grouped_lists):
         print "neighborhoods_only", neighborhoods_only
         for group in neighborhoods_only:
             for gene in group:
-                print gene.blast_annatation(), gene.genbank_annotation(), gene.locus(), gene.start(), gene.stop()
+                print gene.blast_annotation(), gene.genbank_annotation(), gene.locus(), gene.start(), gene.stop()
         #print "grouped_lists",grouped_lists
     '''
     # Step 3: greedy algorithm to determine the best neighborhoods to report as a final result
@@ -348,7 +348,7 @@ def optimize_neighborhoods(grouped_lists):
             
             #print all_homologs_in_grouping
             #unique_in_set = len(MakeUnique(all_homologs_in_grouping, lambda a: a.predicted_gene))
-            unique_in_set = len(make_unique(all_homologs_in_grouping, lambda x: x.blast_annatation()))
+            unique_in_set = len(make_unique(all_homologs_in_grouping, lambda x: x.blast_annotation()))
             #if unique_in_set == len_unique_grouped: # we have an optimal solution, perhaps not global optima
             if unique_in_set == number_unique_in_neighborhoods: # we have an optimal solution, perhaps not global optima
                 duplicates =  int(math.fabs(len(all_homologs_in_grouping) - number_unique_in_neighborhoods))
@@ -370,7 +370,7 @@ def optimize_neighborhoods(grouped_lists):
         # This step takes time, so only perform it when you have to
         best_singletons = return_best_singleton_genes(grouped_lists)
         #print "Difference", number_unique_genes_in_organism - number_unique_in_neighborhoods, len(best_singletons)
-        #print "singletons", best_singletons , ' '.join([i.blast_annatation() for i in list(itertools.chain(*best_singletons))])
+        #print "singletons", best_singletons , ' '.join([i.blast_annotation() for i in list(itertools.chain(*best_singletons))])
         best_grouping = best_grouping + best_singletons
     
     

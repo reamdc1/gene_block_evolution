@@ -22,7 +22,7 @@ class Homolog:
         self.__query_accession = str(Query_accession)
         self.__query_common = str(Query_common)
         self.__query_locus = str(Query_locus)
-        self.__blast_annatation = str(BLAST_annotation)
+        self.__blast_annotation = str(BLAST_annotation)
         self.__query_start = int(Query_start)
         self.__query_stop = int(Query_stop)
         self.__query_strand = int(Query_strand)
@@ -101,8 +101,8 @@ class Homolog:
     def query_locus(self):
         return str(self.__query_locus)
     
-    def blast_annatation(self):
-        return str(self.__blast_annatation)
+    def blast_annotation(self):
+        return str(self.__blast_annotation)
         
     def query_start(self):
         return int(self.__query_start)
@@ -188,7 +188,7 @@ class Homolog:
 
     
     def ret_str(self, delim = '\t'):
-        return delim.join([str(i) for i in[self.query_accession(), self.query_common(), self.query_locus(), self.blast_annatation(), self.query_start(), self.query_stop(), self.query_strand(), \
+        return delim.join([str(i) for i in[self.query_accession(), self.query_common(), self.query_locus(), self.blast_annotation(), self.query_start(), self.query_stop(), self.query_strand(), \
             self.query_type(),  self.synonyms(), self.query_gc(), self.accession(), self.organism(), self.locus(), self.genbank_annotation(), self.start(), self.stop(), self.strand(), \
             self.gc(), self.percent_ident(), self.aligned_length(), self.align_query_start(), self.align_query_stop(), self.align_subject_start(), self.align_subject_stop(), \
             self.e_val(), self.bits_score()]])
@@ -202,7 +202,7 @@ class Homolog:
     # Test first though. :)                              #
     ###################################################### 
     def ReturnVals(self): # I DO NOT LIKE THIS... 
-        return self.query_accession(), self.query_common(), self.query_locus(), self.blast_annatation(), self.query_start(), self.query_stop(), self.query_strand(), self.query_type(),  self.synonyms(), self.query_gc(), self.accession(), self.organism(), self.locus(), self.genbank_annotation(), self.start(), self.stop(), self.strand(), self.gc(), self.percent_ident(), self.aligned_length(), self.align_query_start(), self.align_query_stop(), self.align_subject_start(), self.align_subject_stop(),self.e_val(), self.bits_score()
+        return self.query_accession(), self.query_common(), self.query_locus(), self.blast_annotation(), self.query_start(), self.query_stop(), self.query_strand(), self.query_type(),  self.synonyms(), self.query_gc(), self.accession(), self.organism(), self.locus(), self.genbank_annotation(), self.start(), self.stop(), self.strand(), self.gc(), self.percent_ident(), self.aligned_length(), self.align_query_start(), self.align_query_stop(), self.align_subject_start(), self.align_subject_stop(),self.e_val(), self.bits_score()
 
     # i have no idea what the hell the point of this even is.... i have something above that is capable of dealing with this functionality already.
     def ReturnHomologStr(self, delim = '\t'):
@@ -214,7 +214,7 @@ class Homolog:
     # It has been tested and validated as of 11/10/2014... what a pain
     def to_file(self):
         
-        query_str = '|'.join([str(i) for i in [self.query_accession(), self.query_common(), self.query_locus(), self.blast_annatation(), self.query_start(), self.query_stop(), self.query_strand(), self.query_type(),  self.synonyms(), self.query_gc()]])
+        query_str = '|'.join([str(i) for i in [self.query_accession(), self.query_common(), self.query_locus(), self.blast_annotation(), self.query_start(), self.query_stop(), self.query_strand(), self.query_type(),  self.synonyms(), self.query_gc()]])
         
         subject_str = '|'.join([str(i) for i in [self.accession(), self.organism(), self.locus(), self.genbank_annotation(), self.start(), self.stop(), self.strand(), self.gc()]])
         

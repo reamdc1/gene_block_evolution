@@ -18,10 +18,10 @@ def parser_code():
 
     parser = argparse.ArgumentParser(description="Download and parse a regulonDB operon file, then determine information about the component genes by investigating the refrence organisms.")
 
-    parser.add_argument("-i", "--infolder", dest="infolder", metavar="FOLDER", default='./genomes/',
+    parser.add_argument("-i", "--infolder", dest="infolder", metavar="DIRECTORY", default='./genomes/',
                 help="Folder containing all genbank files for use by the program.")
                  
-    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="FOLDER", default='./regulonDB/',
+    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="DIRECTORY", default='./regulonDB/',
                 help="Folder where results will be stored.")
     
     parser.add_argument("-f", "--filter", dest="filter", metavar="FILE", default='NONE',

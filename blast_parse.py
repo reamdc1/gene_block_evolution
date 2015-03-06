@@ -17,10 +17,10 @@ def parser_code():
 
     parser = argparse.ArgumentParser(description="Parse the results of a BLAST -m8 search and organize the results by specific operons. The program will save the results in a folder designated by the user or the default './blast_parse/'.")
                 
-    parser.add_argument("-i", "--infolder", dest="infolder", default='./blast_result/', metavar="FOLDER",
+    parser.add_argument("-i", "--infolder", dest="infolder", default='./blast_result/', metavar="DIRECTORY",
                 help="A file that contains the path to every organism database that you are interested in.")
     
-    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="FOLDER", default='./blast_parse/',
+    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="DIRECTORY", default='./blast_parse/',
                 help="Folder where the BLAST results will be stored. Default is the folder './blast_result/'.")
     
     parser.add_argument("-q", "--operon_query", dest="operon_query", default='./regulonDB/operon_names_and_genes.txt', metavar="FILE",

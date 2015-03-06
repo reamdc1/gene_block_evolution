@@ -45,10 +45,10 @@ def parser_code():
     parser.add_argument("-i", "--infile", dest="infile", metavar="FILE", default='./regulonDB/operon_names_and_genes.txt',
                 help="Input file for the operon query step of the pipeline.")
     
-    parser.add_argument("-I", "--infolder", dest="infolder", metavar="FOLDER", default='./genomes/',
+    parser.add_argument("-I", "--infolder", dest="infolder", metavar="DIRECTORY", default='./genomes/',
                 help="Folder containing all genbank files for use by the program.")
                  
-    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="FOLDER", default='./regulonDB/',
+    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="DIRECTORY", default='./regulonDB/',
                 help="Folder where results will be stored.")
     
     parser.add_argument("-f", "--filter", dest="filter", metavar="FILE", default='./phylo_order.txt',

@@ -1,11 +1,14 @@
 astCADBE	astA	astB	astC	astD	astE
 atpIBEFHAGDC	atpI	atpH	atpC	atpB	atpA	atpG	atpF	atpE	atpD
-bamA-hlpA-lpxD-fabZ-lpxAB-rnhB-dnaE	hlpA	dnaE	rnhB	lpxA	lpxB	lpxD	bamA	fabZ
+bamA-skp-lpxD-fabZ-lpxAB-rnhB-dnaE	dnaE	skp	rnhB	lpxA	lpxB	lpxD	bamA	fabZ
 caiTABCDE	caiA	caiE	caiD	caiC	caiB	caiT
 casABCDE12	casE	casD	casA	casC	casB	cas1	cas2
+chbBCARFG	chbG	chbF	chbC	chbB	chbA	chbR
+cyoABCDE	cyoA	cyoC	cyoB	cyoE	cyoD
 cysPUWAM	cysU	cysM	cysW	cysA	cysP
 dppABCDF	dppA	dppB	dppC	dppD	dppF
 fecABCDE	fecD	fecE	fecB	fecC	fecA
+flgBCDEFGHIJ	flgC	flgB	flgG	flgF	flgE	flgD	flgJ	flgI	flgH
 fliFGHIJK	fliI	fliH	fliK	fliJ	fliG	fliF
 fucPIKUR	fucU	fucR	fucK	fucP	fucI
 gatYZABCD	gatY	gatZ	gatD	gatA	gatB	gatC
@@ -43,7 +46,6 @@ thiCEFSGH	thiS	thiH	thiC	thiG	thiF	thiE
 thrS-infC-rpmI-rplT-pheMST-ihfA	rpmI	pheS	pheT	ihfA	rplT	infC	thrS	pheM
 trpLEDCBA	trpL	trpB	trpC	trpA	trpD	trpE
 ulaABCDEF	ulaD	ulaE	ulaF	ulaA	ulaB	ulaC
-waaQGPSBIJYZU	waaS	waaB	waaQ	waaP	waaG	waaU	waaZ	waaJ	waaI	waaY
 ybgIJKL-nei	ybgI	ybgJ	ybgK	ybgL	nei
 yceD-rpmF-plsX-fabHDG-acpP-fabF	fabD	fabG	fabF	acpP	yceD	plsX	fabH	rpmF
 ydgK-rsxABCDGE-nth	rsxA	ydgK	rsxC	rsxB	rsxE	rsxD	rsxG	nth

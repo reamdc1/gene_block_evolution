@@ -27,10 +27,10 @@ def parser_code():
     parser.add_argument("-i", "--infile", dest="infile", default='./regulonDB/operon_names_and_genes.txt', metavar="FILE",
                 help="The parsed gene block file. The default is the parsed regulonDB operon file.")
                 
-    parser.add_argument("-I", "--infolder", dest="infolder", default='./optimized_operon/', metavar="FOLDER",
+    parser.add_argument("-I", "--infolder", dest="infolder", default='./optimized_operon/', metavar="DIRECTORY",
                 help="A folder that contains the final operon results. The files will have operons grouped by organism, arranged by start, and have spurious BLAST results removed.")
     
-    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="FOLDER", default='./operon_distance_matrices/',
+    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="DIRECTORY", default='./operon_distance_matrices/',
                 help="Folder where the filtered results will be stored. Default is the folder './operon_distance_matrices/'.")
 
     parser.add_argument("-F", "--operon_filter", dest="operon_filter", default='NONE', metavar="FILE",

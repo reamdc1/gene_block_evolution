@@ -16,10 +16,10 @@ def parser_code():
 
     parser = argparse.ArgumentParser(description='Run BLAST on a set of searchable database using a query that is specified by the user. Results will be stored by the accession number of the database. Currently this script will only accept protein queries, but I will update to automatically run on all types of genes, as most of the information needed for this behavior exists.')
 
-    parser.add_argument("-d", "--database_folder", dest="database_folder", metavar="FOLDER", default='./db/',
+    parser.add_argument("-d", "--database_folder", dest="database_folder", metavar="DIRECTORY", default='./db/',
                 help="Folder containing all BLAST searchable databases to be used by the program.")
                  
-    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="FOLDER", default='./blast_result/',
+    parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="DIRECTORY", default='./blast_result/',
                 help="Folder where the BLAST results will be stored.")
     
     parser.add_argument("-f", "--filter", dest="filter", metavar="FILE", default='NONE',
