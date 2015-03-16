@@ -19,6 +19,7 @@ from Bio.SeqRecord import SeqRecord
 from Bio import Application
 from Bio.Application import _Option
 from Bio.Align.Applications import ClustalwCommandline
+from Bio import Phylo
 import subprocess
 
 # This folder and its contents will be removed after this program concludes its run. i just need a place to store a bunch of intermediate files.
@@ -157,6 +158,20 @@ def make_target_fasta(marker, infolder, filter_file):
     return "./msa_tmp/distmat_marker.ph"
 
 
+def return_tree_order_list(newick_tree_file):
+    result = []
+    tree = Phylo.read("out_tree.nwk", "newick")
+    for clade in tree.find_clades():
+        if clade.name != None:
+            accession, common_tmp, marker = clade.name.split('|')
+            common = '_'.join(common_tmp.split('_')[:2])
+            result.append(','.join([accession, common]))
+            clade = common
+    print '\n'.join(result)
+    
+    Phylo.write(tree, "./test_tree.nwk", "newick")
+
+
 def main():
     
     start = time.time()    
@@ -171,6 +186,8 @@ def main():
     
     tree_file = make_target_fasta(marker_gene, infolder, filter_file)
     shutil.copy(tree_file, outfile)
+    
+    return_tree_order_list(tree_file)
     
     # get rid of the temp files
     shutil.rmtree(tmp_directory)
