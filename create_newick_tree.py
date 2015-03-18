@@ -121,13 +121,20 @@ def create_distmat(fname, method = 1):
 def make_target_fasta(marker, infolder, filter_file):
     org_paths = return_file_list(infolder, filter_file)
     result = [] # this is not great
+    common_to_accession_dict = {}
     orgs_with_marker = []
     marker = marker.lower()
     for org in org_paths:
         genes_found = []
         seq_record = SeqIO.parse(open(org), "genbank").next()
         accession = seq_record.annotations['accessions'][0]
-        organism = seq_record.annotations['organism'].replace(' ', '_')
+        organism_tmp = seq_record.annotations['organism'].replace(' ', '_')
+        # Put code here to determine the format of the organisms' english name. currently i am using genus species, but strain can also be used
+        organism = '_'.join(organism_tmp.split('_')[:2])
+        
+        # Here we store the {organism:accession} information so that we can build a new list that is needed for the visualization pipeline
+        common_to_accession_dict.update({organism:accession})
+        
         found = False
         for fnum, feature in enumerate(seq_record.features):            
             if feature.type == 'CDS':
@@ -142,7 +149,8 @@ def make_target_fasta(marker, infolder, filter_file):
                 if gene == marker:
                     genes_found.append(gene)
                     seq = feature.qualifiers['translation'] # this returns the protein product, not suitable for RNA products like 16s
-                    result.append(">%s|%s|%s" % (accession, organism, gene))
+                    #result.append(">%s|%s|%s" % (accession, organism, gene))
+                    result.append(">%s" % organism)
                     result.append(''.join(seq))
                     orgs_with_marker.append(accession)
                     break
@@ -155,16 +163,19 @@ def make_target_fasta(marker, infolder, filter_file):
     print "orgs_with_marker", len(orgs_with_marker)
     create_distmat(outfile)
     
-    return "./msa_tmp/distmat_marker.ph"
+    print "common_to_accession_dict", common_to_accession_dict.keys()
+    return "./msa_tmp/distmat_marker.ph", common_to_accession_dict
 
 
-def return_tree_order_list(newick_tree_file):
+def return_tree_order_list(newick_tree_file, common_to_accession_dict):
     result = []
     tree = Phylo.read("out_tree.nwk", "newick")
     for clade in tree.find_clades():
         if clade.name != None:
-            accession, common_tmp, marker = clade.name.split('|')
-            common = '_'.join(common_tmp.split('_')[:2])
+            #accession, common_tmp, marker = clade.name.split('|')
+            #common = '_'.join(common_tmp.split('_')[:2])
+            common = clade.name
+            accession = common_to_accession_dict[common]
             result.append(','.join([accession, common]))
             clade = common
     print '\n'.join(result)
@@ -184,10 +195,10 @@ def main():
     
     print infolder, outfile, filter_file
     
-    tree_file = make_target_fasta(marker_gene, infolder, filter_file)
+    tree_file, common_to_accession_dict = make_target_fasta(marker_gene, infolder, filter_file)
     shutil.copy(tree_file, outfile)
     
-    return_tree_order_list(tree_file)
+    return_tree_order_list(tree_file, common_to_accession_dict)
     
     # get rid of the temp files
     shutil.rmtree(tmp_directory)
