@@ -247,7 +247,7 @@ def return_gene_block_organism_data(flist):
                 accession = hlog.accession()
             except:
                 print line
-            predicted_gene = hlog.blast_annatation()
+            predicted_gene = hlog.blast_annotation()
             
             # store the homolog where it belongs
             if accession in org_dict.keys():
@@ -286,7 +286,7 @@ def make_event_reporting_data_structure(gene_block_dict, max_gap):
             # we use this list twice, so storing it
             list_homologs = gene_block_dict[gene_block][organism]
             # returns a count of each gene that was in the homolog list as a dictionary
-            org_gene_cnt = dict(Counter([i.blast_annatation() for i in  list_homologs]))
+            org_gene_cnt = dict(Counter([i.blast_annotation() for i in  list_homologs]))
             # returns a list of gene blocks, the number of which can be used to determine splits later. 
             # the special name 'groups' is how that can be determined.
             gene_block_groupings = homolog_list_grouping_function(list_homologs, max_gap)
@@ -380,6 +380,7 @@ def return_event_counts_as_dict(event_reporting_data_structure):
     result = {}
     
     for gene_block in sorted(event_reporting_data_structure.keys()):
+        print "gene_block ", gene_block 
         result.update({gene_block:{}})
         org_list = event_reporting_data_structure[gene_block]
         # use the magic that is itertools to make an iterable for all combinations of two organisms for compairison 
@@ -390,6 +391,8 @@ def return_event_counts_as_dict(event_reporting_data_structure):
             duplications = return_duplications(event_reporting_data_structure[gene_block], org1, org2)
             splits = return_splits(event_reporting_data_structure[gene_block], org1, org2)
             
+            print "org1", org1, "org2", org2 
+            
             #print "Deletions", deletions, "Duplications", duplications, "Splits", splits
             
             # There is a faster implementation that uses a try except... which i have been kind enough to include if speed is you thing.
@@ -398,11 +401,19 @@ def return_event_counts_as_dict(event_reporting_data_structure):
                 result[gene_block][org1].update({org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}})
             else:
                 result[gene_block].update({org1:{org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}}})
-            '''    
+            '''
+            if org1 in result[gene_block].keys():
+                result[gene_block][org1].update({org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}})
+            else:
+                result[gene_block].update({org1:{org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}}})
+            
+            
+            '''  
             try:
                 result[gene_block][org1].update({org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}})
             except:
                 result[gene_block].update({org1:{org2:{'deletions':deletions, 'duplications':duplications, 'splits':splits}}})
+            '''
             
     return result
 

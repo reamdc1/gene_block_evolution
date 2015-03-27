@@ -1,0 +1,23 @@
+This document will list all of the command line args that are needed to run my program from start to finish. 
+I am only including those arguments which change the behavior of the program, and not those that alter intermediate files.
+
+The following are essential to the program running correctly, however acceptable defaults will be provided.
+1) genomes folder - where all of the genbank formatted genomes used in the run will reside
+2) organism filter - Wich genomes to include.  This is a list of accession numbers corresponding to the chromosomal genbank file. one per line.
+		- This MAY need to be specified in the order of a the phylogenetic tree that is supplied. (I'm currently working this out, see 7 below).
+		- If this option is not specified, each genbank file (plasmids, other chromosomems will be included) will be included, but treated as a seperate organism. NOT IDEAL)
+3) outfolder - where all results, as well as intermediates of the program will be stored.
+		- The images will have a seperate output folder, as will filtered gene block information.  This will be stored in the outfolder directory.
+4) number of processors - maximum number of processors that we will use. Default is all physical and virtual processors reported by the os. 
+		The range of 1- max processors is enforced.
+5) e-value - This is the expected value from BLAST that we use as the maximum allowable e-val to be considered an ortholog of a gene block gene.
+6) refrence - This is the organism that your gene block information comes from.  Will be removed soon though.
+7) tree file - This is a newick format phylogenetic tree.
+		- Currently, this option would cause too many issues. i would like to odd it.  below will outline what the porblems are.
+		- When provided by the user, the program should be capable of getting the list of organisms from the tree, and using that list to create the filter list.
+		unless the tree does not have nodes that are named as accessions... Really, the program needs to calculate the tree... 
+8) gene block file	- If this is entered, the program will not attempt to use regulon db.  
+		- A refrence organism is currently required, but i am moving to eliminate this requirement with a more advanced script that only needs validation currently.
+		
+Here is a list of things that are optional, based on input.
+8) 

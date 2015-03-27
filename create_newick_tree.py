@@ -180,7 +180,18 @@ def return_tree_order_list(newick_tree_file, common_to_accession_dict):
             clade = common
     print '\n'.join(result)
     
-    Phylo.write(tree, "./test_tree.nwk", "newick")
+    outfile_for_asma = './asma_outlist.txt'
+    handle = open(outfile_for_asma, 'w')
+    handle.write('\n'.join(result))
+    handle.close()
+    
+    phylo_order_new = './phylo_order_new.txt'
+    handle = handle = open(phylo_order_new, 'w')
+    handle.write('\n'.join([i.split(',')[0] for i in result]))
+    handle.close()
+    
+    
+    #Phylo.write(tree, "./test_tree.nwk", "newick")
 
 
 def main():
@@ -198,7 +209,8 @@ def main():
     tree_file, common_to_accession_dict = make_target_fasta(marker_gene, infolder, filter_file)
     shutil.copy(tree_file, outfile)
     
-    return_tree_order_list(tree_file, common_to_accession_dict)
+    #return_tree_order_list(tree_file, common_to_accession_dict)
+    return_tree_order_list(outfile, common_to_accession_dict)
     
     # get rid of the temp files
     shutil.rmtree(tmp_directory)
