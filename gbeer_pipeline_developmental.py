@@ -5,10 +5,10 @@ import os
 import sys
 import argparse
 
-#TODO:  Rename this script, it's horrible!
+#TODO:  Rename this script
 
-# Copyright(C) 2014 David Ream
-# Released under Biopython license. http://www.biopython.org/DIST/LICENSE
+# Copyright(C) 2015 David Ream
+# Released under GPL version 3 licence. http://www.gnu.org/licenses/lgpl.html
 # Do not remove this comment
 
 #########################################################################################################################################
@@ -47,9 +47,13 @@ def parser_code():
     
     parser.add_argument("-I", "--infolder", dest="infolder", metavar="DIRECTORY", default='./genomes/',
                 help="Folder containing all genbank files for use by the program.")
+                
+    # this line will replace infolder 
+    parser.add_argument("--genome_directory", dest="genome_directory", metavar="DIRECTORY", default='./genomes/',
+                help="Folder containing all genbank files for use by the program.")
                  
     parser.add_argument("-o", "--outfolder", dest="outfolder", metavar="DIRECTORY", default='./regulonDB/',
-                help="Folder where results will be stored.")
+                help="Folder where the results of a run will be stored.")
     
     parser.add_argument("-f", "--filter", dest="filter", metavar="FILE", default='./phylo_order.txt',
                 help="File restrictiong which accession numbers this script will process. If no file is provided, filtering is not performed.")
